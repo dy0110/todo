@@ -1,7 +1,12 @@
-use actix_web::{App, HttpResponse, HttpServer, get};
+use actix_web::{App, HttpResponse, HttpServer, get, ResponseError};
+use thiserror::Error;
+#[derive(Error,Debug)]
+enum MyError{}
+
+impl ResponseError for MyError {}
 
 #[get("/")]
-async fn index () -> Result<HttpResponse, actix_web::Error>{
+async fn index () -> Result<HttpResponse, MyError>{
     let response_body = "Hello, world!";
     Ok(HttpResponse::Ok().body(response_body))
 }
